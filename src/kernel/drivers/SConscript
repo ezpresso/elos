@@ -1,0 +1,4 @@
+
+SConscript(dirs=["acpi", "binfmt", "bus", "chipset", "disk", "font", "fs",
+	"gpu", "input", "intr", "ldisc", "linker", "mainboard", "net", "sw",
+	"time", "uart"])

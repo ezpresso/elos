@@ -1,0 +1,5 @@
+Import('kernel')
+
+with kernel.Module("elf32"): kernel.module.Object("elf32.c")
+with kernel.Module("elf64"): kernel.module.Object("elf64.c")
+with kernel.Module("script"): kernel.module.Object("script.c")

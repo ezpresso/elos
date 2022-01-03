@@ -1,0 +1,5 @@
+Import('kernel')
+
+kernel.Object("file.c")
+kernel.Object("gpu.c")
+kernel.Object("mode.c")

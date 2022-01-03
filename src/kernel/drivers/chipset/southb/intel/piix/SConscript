@@ -1,0 +1,3 @@
+Import('kernel')
+
+with kernel.Module("piix"): kernel.module.Object("isa.c")

@@ -1,0 +1,68 @@
+Import('build Target SkipBody')
+
+# TODO
+Import('Error')
+
+class StaticModule:
+	def __init__(self, kernel):
+		self.kernel = kernel
+
+	def __enter__(self):
+		module = self.kernel.module = self.kernel
+		return None
+
+	def __exit__(self, type, value, traceback):
+		self.kernel.module = None
+		return value is None
+
+class Kernel(Target):
+	def CFlag(self, flags):
+		super().CFlag(flags)
+		self.EnvAppend(CFLAGS_NOSAN = flags)
+		self.module = None
+
+	def CFlagSanitizer(self, flags):
+		super().CFlag(flags)
+
+	def Module(self, name):
+		modlist = self.GetConfig('STATIC_MODULES')
+		if name in modlist:
+			print("static module: " + name)
+			return StaticModule(self)
+
+		if name == "elf64":
+			return SkipBody(name)
+
+		Error("TODO")
+		return None
+
+		modlist = self.GetConfig('DYNAMIC_MODULES')
+		if name in modlist:
+			print("dynamic module: " + name)
+			return
+
+		print("not module: " + name)
+		return SkipBody()
+
+with build.Target("kernel", _class=Kernel) as kernel:
+	kernel.IncludeDir("include")
+	kernel.CFlag(["-ffreestanding", "-nostdinc", "-O3"])
+	kernel.CFlag(["-fno-strict-aliasing", "-fno-omit-frame-pointer"])
+	kernel.CFlag("-D__KERNEL__")
+
+	if kernel.Configured('UBSAN'):
+		kernel.CFlagSanitizer("-fsanitize=undefined")
+	if kernel.Configured('ASAN'):
+		kernel.CFlagSanitizer("-fsanitize=kernel-address")
+	if kernel.Configured('STACKCHK'):
+		kernel.CFlagSanitizer("-fstack-protector-all")
+
+	kernel.LinkFlag(["-ffreestanding", "-nostdlib"])
+	kernel.EnvAppend(LIBS="gcc")
+
+	Export('kernel')
+	SConscript(dirs=["arch", "block", "compiler", "device", "drivers", "kern",
+		"lib", "net", "vfs", "vm"])
+
+	kernel.Program()
+	kernel.Install()

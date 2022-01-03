@@ -1,0 +1,11 @@
+Import("kernel")
+
+arch = kernel.GetConfig("ARCHDIR")
+linkscript = arch + "/linker.ld"
+
+kernel.env.StaticObject(linkscript + ".c", CFLAGS=["-P", "-E"])
+script = File(linkscript + ".o")
+kernel.LinkFlag(["-T", script.path])
+kernel.Depends(script)
+
+SConscript(dirs=arch)

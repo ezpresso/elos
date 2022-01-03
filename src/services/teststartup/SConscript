@@ -1,0 +1,6 @@
+Import('build')
+
+with build.Target("teststartup") as test:
+	test.Object("main.c")
+	test.Program()
+	test.Install()

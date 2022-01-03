@@ -1,0 +1,3 @@
+Import('kernel')
+
+with kernel.Module("termios"): kernel.module.Object("termios.c")

@@ -1,0 +1,11 @@
+Import('kernel')
+
+with kernel.Module("acpi"):
+	kernel.module.IncludeDir("include")
+	kernel.module.Object("acpi.c")
+	kernel.module.Object("aml.c")
+	kernel.module.Object("aml_str.c")
+	kernel.module.Object("aml_tree.c")
+	kernel.module.Object("aml_value.c")
+	kernel.module.Object("madt.c")
+	kernel.module.Object("mainboard.c")

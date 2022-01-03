@@ -1,0 +1,7 @@
+Import('kernel')
+
+kernel.Object("block.c")
+kernel.Object("cache.c")
+kernel.Object("device.c")
+kernel.Object("event.c")
+kernel.Object("file.c")

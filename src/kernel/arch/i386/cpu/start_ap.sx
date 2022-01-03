@@ -1,0 +1,90 @@
+/*
+ * ███████╗██╗      ██████╗ ███████╗
+ * ██╔════╝██║     ██╔═══██╗██╔════╝
+ * █████╗  ██║     ██║   ██║███████╗
+ * ██╔══╝  ██║     ██║   ██║╚════██║
+ * ███████╗███████╗╚██████╔╝███████║
+ * ╚══════╝╚══════╝ ╚═════╝ ╚══════╝
+ *
+ * Copyright (c) 2017, Elias Zell
+ *
+ * Permission to use, copy, modify, and/or distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
+ * copyright notice and this permission notice appear in all copies.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+ * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ *
+ */
+
+#include <arch/gdt.h>
+#include <arch/x86.h>
+#include <arch/mp.h>
+
+# this code is loaded at 0x7000
+.section .ap_entry, "ax"
+
+.code16
+.global start_ap
+start_ap:
+	cli
+	xorw %ax, %ax
+	movw %ax, %ds
+	movw %ax, %es
+	movw %ax, %ss
+
+	lgdt gdtdesc
+
+	# enable protected mode
+	movl %cr0, %eax
+	orl  $CR0_PE, %eax
+	movl %eax, %cr0
+
+	ljmpl $KCODE_SEL, $(start32_ap)
+
+.code32
+start32_ap:
+	movw $KDATA_SEL, %ax
+	movw %ax, %ds
+	movw %ax, %es
+	movw %ax, %ss
+	movw $0, %ax
+	movw %ax, %fs
+	movw %ax, %gs
+
+	# enable huge pages
+	movl %cr4, %eax
+	orl $CR4_PSE, %eax
+	movl %eax, %cr4
+
+	# load kernel page directory
+	movl AP_ARG_PGDIR, %ebx
+	movl %ebx, %cr3
+
+	# enable paging
+	movl %cr0, %eax
+	orl $CR0_PG, %eax
+	movl %eax, %cr0
+
+	# setup stack
+	movl AP_ARG_STACK, %esp
+
+	push AP_ARG_CPU
+	call *(AP_ARG_KMAIN) # call ap_main
+hang:
+	hlt
+	jmp hang
+
+.p2align 2
+gdt:
+	SEG_NULLASM
+ 	SEG_ASM(SEG_X | SEG_R,	0, 0xffffffff)
+	SEG_ASM(SEG_W,		0, 0xffffffff)
+gdtdesc:
+	.word (gdtdesc - gdt - 1)
+	.long gdt

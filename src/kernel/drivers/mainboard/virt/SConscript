@@ -1,0 +1,3 @@
+Import('kernel')
+
+with kernel.Module("qemu-i440fx"): kernel.module.Object("qemu-i440fx.c")

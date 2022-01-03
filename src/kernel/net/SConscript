@@ -1,0 +1,3 @@
+Import('kernel')
+
+kernel.Object("socket.c")

@@ -1,0 +1,3 @@
+Import('kernel')
+
+with kernel.Module("i8254x"): kernel.module.Object("i8254x.c")

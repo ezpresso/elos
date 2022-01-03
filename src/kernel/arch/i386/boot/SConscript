@@ -1,0 +1,4 @@
+Import('kernel')
+
+kernel.Object("boot.sx")
+kernel.Object("boot_vm.c", CFLAGS=kernel.env['CFLAGS_NOSAN'])

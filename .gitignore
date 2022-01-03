@@ -1,0 +1,16 @@
+bin/*/*
+!bin/i686-pc/image
+!bin/i686-pc/image/boot.iso
+
+build/__pycache__
+
+private/*
+!private/hdd
+!private/hdd.img
+!private/QEMU.command
+
+src/ports/dash
+src/ports/time-1.9
+
+.sconsign.dblite
+.DS_Store

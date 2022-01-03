@@ -1,0 +1,5 @@
+Import('kernel')
+
+with kernel.Module("isa"): kernel.module.Object("isa.c")
+
+SConscript(dirs=["pci"])

@@ -1,0 +1,10 @@
+Import('kernel')
+
+kernel.Object("libgcc.c")
+
+if kernel.Configured('UBSAN'):
+	kernel.Object("ubsan.c", CFLAGS=kernel.env['CFLAGS_NOSAN'])
+if kernel.Configured('ASAN'):
+	kernel.Object("asan.c", CFLAGS=kernel.env['CFLAGS_NOSAN'])
+if kernel.Configured('STACKCHK'):
+	kernel.Object("stack.c", CFLAGS=kernel.env['CFLAGS_NOSAN'])

@@ -1,0 +1,8 @@
+Import('kernel')
+
+# TODO module
+kernel.Object("mem.c")
+kernel.Object("std.c")
+kernel.Object("tty.c")
+
+with kernel.Module("pty"): kernel.module.Object("pty.c")

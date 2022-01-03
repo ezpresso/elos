@@ -1,0 +1,6 @@
+Import('kernel')
+
+kernel.Object("devfs.c")
+kernel.Object("initrd.c")
+
+SConscript(dirs=["ext2"])

@@ -1,0 +1,4 @@
+Import('build')
+
+build.GlobalInclude("include")
+SConscript(dirs=["kernel", "services"])

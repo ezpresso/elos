@@ -1,0 +1,16 @@
+Import('kernel')
+
+kernel.CFlag(["-mno-mmx", "-mno-sse", "-mno-sse2", "-mno-sse3", "-msoft-float"])
+kernel.ASFlag("-m32")
+
+kernel.IncludeDir("include")
+kernel.Object("acpi.c")
+kernel.Object("kmain.c", CFLAGS=kernel.env['CFLAGS_NOSAN'])
+kernel.Object("log.c", CFLAGS=kernel.env['CFLAGS_NOSAN'])
+kernel.Object("mp.c", CFLAGS=kernel.env['CFLAGS_NOSAN'])
+kernel.Object("setjmp.sx")
+kernel.Object("switch.sx")
+kernel.Object("thread.c")
+kernel.Object("vm.c")
+
+SConscript(dirs=["boot", "cpu", "device"])

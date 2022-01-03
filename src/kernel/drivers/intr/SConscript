@@ -1,0 +1,4 @@
+Import('kernel')
+
+with kernel.Module("i8259a"): kernel.module.Object("i8259a.c")
+with kernel.Module("ioapic"): kernel.module.Object("ioapic.c")

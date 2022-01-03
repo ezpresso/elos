@@ -1,0 +1,39 @@
+.section .text
+
+# int arch_setjmp(jmp_buf_t *buf);
+.global arch_setjmp
+.type arch_setjmp, @function	
+arch_setjmp:
+	mov 4(%esp), %eax
+
+	mov %ebx, (%eax)
+	mov %esi, 4(%eax)
+	mov %edi, 8(%eax)
+	mov %ebp, 12(%eax)
+
+	# Calculate the stack pointer
+	lea 4(%esp), %ecx # Skip the argument _buf_
+	mov %ecx, 16(%eax)
+
+	# Calculate the instruction pointer
+	mov (%esp), %ecx
+	mov %ecx, 20(%eax)
+
+	xor %eax, %eax
+	ret
+
+# __noreturn void arch_longjmp(jmp_buf_t *buf, int val);
+.global arch_longjmp
+.type arch_longjmp, @function	
+arch_longjmp:
+	mov  4(%esp),%edx # buf
+	mov  8(%esp),%eax # val
+
+	mov  0(%edx),%ebx
+	mov  4(%edx),%esi
+	mov  8(%edx),%edi
+	mov 12(%edx),%ebp
+	mov 16(%edx),%ecx
+	mov    %ecx, %esp
+	mov 20(%edx),%ecx
+	jmp *%ecx

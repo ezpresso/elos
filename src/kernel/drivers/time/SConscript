@@ -1,0 +1,5 @@
+Import('kernel')
+
+with kernel.Module("atpit"): kernel.module.Object("atpit.c")
+with kernel.Module("atrtc"): kernel.module.Object("atrtc.c")
+with kernel.Module("hpet"): kernel.module.Object("hpet.c")

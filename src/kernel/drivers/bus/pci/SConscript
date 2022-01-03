@@ -1,0 +1,6 @@
+Import('kernel')
+
+with kernel.Module("pci"):
+	kernel.module.Object("bridge.c")
+	kernel.module.Object("host.c")
+	kernel.module.Object("pci.c")

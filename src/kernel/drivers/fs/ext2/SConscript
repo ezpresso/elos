@@ -1,0 +1,9 @@
+Import('kernel')
+
+with kernel.Module("ext2"):
+	kernel.module.IncludeDir("include")
+	kernel.module.Object("alloc.c")
+	kernel.module.Object("dir.c")
+	kernel.module.Object("ext2.c")
+	kernel.module.Object("inode.c")
+	kernel.module.Object("vnops.c")

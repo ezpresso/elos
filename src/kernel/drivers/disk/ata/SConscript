@@ -1,0 +1,5 @@
+Import('kernel')
+
+with kernel.Module("ata"):
+	kernel.module.Object("ata.c")
+	kernel.module.Object("ata_pci.c")

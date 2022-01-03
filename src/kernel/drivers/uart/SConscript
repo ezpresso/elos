@@ -1,0 +1,3 @@
+Import('kernel')
+
+with kernel.Module("uart-pc"): kernel.module.Object("uart-pc.c")

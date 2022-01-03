@@ -1,0 +1,6 @@
+Import('build')
+
+with build.Target("init") as init:
+	init.Object("init.c")
+	init.Program()
+	init.Install()

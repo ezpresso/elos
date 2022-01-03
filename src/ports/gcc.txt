@@ -1,0 +1,29 @@
+../gcc-7.2.0/configure \
+--host=i686-linux-musl \
+--enable-host-shared \
+--enable-shared enable_shared=yes \
+--enable-languages=c,c++ \
+--enable-lto --disable-nls \
+--disable-werror \
+--target=i686-linux-musl \
+--with-build-sysroot=/Users/ELE/mnt/elos/ \
+--prefix=/usr
+
+
+-DLLVM_TABLEGEN=/usr/local/Cellar/llvm/4.0.1/bin/llvm-tblgen \
+-DCLANG_TABLEGEN=<path-to-host-bin>/clang-tblgen \
+
+-DCMAKE_CROSSCOMPILING=True \
+-DCMAKE_SYSTEM_NAME=Linux \
+-DCMAKE_BUILD_TYPE=Release \
+-DCMAKE_C_COMPILER=/usr/local/i686-linux-musl/bin/i686-linux-musl-gcc \
+-DCMAKE_CXX_COMPILER=/usr/local/i686-linux-musl/bin/i686-linux-musl-c++ \
+-DCMAKE_AR=/usr/local/i686-linux-musl/bin/i686-linux-musl-ar \
+-DCMAKE_NM=/usr/local/i686-linux-musl/bin/i686-linux-musl-nm \
+-DCMAKE_RANLIB=i686-linux-musl-ranlib \
+-DCMAKE_INSTALL_PREFIX=/Users/ELE/mnt/elos \
+-DLLVM_DEFAULT_TARGET_TRIPLE=x86-linux-gnu \
+-DLLVM_TABLEGEN=/usr/local/Cellar/llvm/5.0.1/bin/llvm-tblgen \
+-DLLVM_TARGET_ARCH=X86 \
+-DLLVM_TARGETS_TO_BUILD=X86
+

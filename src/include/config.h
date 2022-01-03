@@ -1,0 +1,21 @@
+#ifndef __CONFIG_H__
+#define __CONFIG_H__
+
+#define CONFIG_YES 1
+#define CONFIG_NO 0
+
+#define CONFIGURED(conf) CONFIG_ ## conf == CONFIG_YES
+
+#define CONFIG_CC i686-linux-musl-gcc
+#define CONFIG_ARCH i686
+#define CONFIG_NCPU 8
+#define CONFIG_MP CONFIG_YES
+#define CONFIG_DEVELOPMENT CONFIG_YES
+#define CONFIG_MODULAR CONFIG_YES
+#define CONFIG_BINFMT elf32
+#define CONFIG_INVARIANTS CONFIG_YES
+#define CONFIG_ASAN CONFIG_YES
+#define CONFIG_UBSAN CONFIG_YES
+#define CONFIG_STACKCHK CONFIG_YES
+
+#endif

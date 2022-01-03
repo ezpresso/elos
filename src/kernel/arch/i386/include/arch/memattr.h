@@ -1,0 +1,7 @@
+#ifndef ARCH_MEMATTR_H
+#define ARCH_MEMATTR_H
+
+#define VM_MEMATTR_DEFAULT	0
+#define VM_MEMATTR_UNCACHEABLE	1
+
+#endif

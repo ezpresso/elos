@@ -1,0 +1,5 @@
+Import('kernel')
+
+with kernel.Module("i8042"):
+	kernel.module.Object("atkbd.c")
+	kernel.module.Object("i8042.c")

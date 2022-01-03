@@ -1,0 +1,10 @@
+Import('kernel')
+
+kernel.Object("cpu.c", CFLAGS=kernel.env['CFLAGS_NOSAN'])
+kernel.Object("fpu.c")
+kernel.Object("frame.c")
+kernel.Object("gdt.sx")
+kernel.Object("interrupt.sx")
+kernel.Object("lapic.c")
+kernel.Object("mmu.c")
+kernel.Object("start_ap.sx")

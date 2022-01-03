@@ -1,0 +1,3 @@
+Import('kernel')
+
+with kernel.Module("i440fx"): kernel.module.Object("pmc.c")

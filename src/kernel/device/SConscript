@@ -1,0 +1,15 @@
+Import('kernel')
+
+kernel.Object("bounce.c")
+kernel.Object("dma.c")
+kernel.Object("bus.c")
+kernel.Object("device.c")
+kernel.Object("driver.c")
+kernel.Object("evtimer.c")
+kernel.Object("intr.c")
+kernel.Object("mainboard.c")
+kernel.Object("nvram.c")
+kernel.Object("rtc.c")
+
+
+SConscript(dirs=["gpu"])
